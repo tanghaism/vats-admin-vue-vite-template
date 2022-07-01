@@ -4,6 +4,7 @@ module.exports = {
     node: true,
     serviceworker: true,
     worker: true,
+    'vue/setup-compiler-macros': true,
   },
   extends: [
     'plugin:vue/vue3-essential',

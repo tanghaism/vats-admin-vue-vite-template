@@ -16,7 +16,6 @@ let savedPrompt: any = null;
 window.addEventListener(
   'beforeinstallprompt',
   function (e: any) {
-    console.log('beforeinstallprompt', e);
     // 监听到可安装事件，进行触发提醒用户
     e.preventDefault();
     savedPrompt = e;
@@ -47,7 +46,7 @@ window.addEventListener(
     }, 200);
     return false;
   },
-  { once: false },
+  { once: true },
 );
 
 watch(
@@ -70,6 +69,20 @@ watch(
     }
   },
 );
+
+const unregister = () => {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.ready
+      .then(registration => {
+        registration.unregister();
+      })
+      .catch(error => console.log('error'));
+  }
+};
+
+defineExpose({
+  unregister,
+});
 </script>
 
 <style lang="scss" scoped></style>

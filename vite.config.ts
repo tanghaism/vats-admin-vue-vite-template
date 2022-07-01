@@ -78,23 +78,25 @@ export default ({ mode }: any) => {
         registerType: 'prompt',
         workbox: {
           skipWaiting: false,
-          cleanupOutdatedCaches: false,
-          runtimeCaching: [
-            {
-              urlPattern: /^https:\/\/cdn\.staticfile\.org\/.*/i,
-              handler: 'NetworkFirst',
-              options: {
-                cacheName: 'cdn-assets',
-                expiration: {
-                  maxEntries: 20,
-                  maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
-                },
-                cacheableResponse: {
-                  statuses: [0, 200],
-                },
-              },
-            },
-          ],
+          cleanupOutdatedCaches: true,
+          // 可缓存远程静态资源
+          // runtimeCaching: [
+          //   {
+          //     urlPattern: /^https:\/\/cdn\.staticfile\.org\/.*/i,
+          //     handler: 'CacheFirst',
+          //     method: 'GET',
+          //     options: {
+          //       cacheName: 'cdn-assets',
+          //       expiration: {
+          //         maxEntries: 10,
+          //         maxAgeSeconds: 60 * 60 * 24 * 30, // <== 30 days
+          //       },
+          //       cacheableResponse: {
+          //         statuses: [0, 200],
+          //       },
+          //     },
+          //   },
+          // ],
         },
         manifest: {
           name: name,
@@ -138,6 +140,13 @@ export default ({ mode }: any) => {
         '@': resolve(__dirname, 'src'),
       },
     },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@import "@/assets/scss/variables.scss";`,
+        },
+      },
+    },
     server: {
       open: true,
       host: '0.0.0.0',
@@ -166,6 +175,7 @@ export default ({ mode }: any) => {
     },
     build: {
       minify: 'terser',
+      emptyOutDir: true,
       cssCodeSplit: false,
       polyfillDynamicImport: false,
       terserOptions: {
