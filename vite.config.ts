@@ -180,7 +180,7 @@ export default ({ mode }: any) => {
       polyfillDynamicImport: false,
       terserOptions: {
         compress: {
-          drop_console: false,
+          drop_console: true,
         },
       },
       rollupOptions: {
