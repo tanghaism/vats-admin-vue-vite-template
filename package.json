@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "Diff=$(git diff --cached --diff-filter=d --name-only -- '*.ts' '*.tsx' '*.js' '*.vue') && eslint --fix $Diff --ext .js,.ts,.vue.tsx"
   },
   "dependencies": {
     "ant-design-vue": "^3.2.9",
@@ -15,6 +16,7 @@
     "pinia": "^2.0.14",
     "vats": "ssh://git@github.com:tanghaism/vats.git#master",
     "vue": "^3.2.25",
+    "vue-demi": "^0.13.1",
     "vue-i18n": "^9.1.10",
     "vue-router": "^4.0.16",
     "vue-watermarker": "^0.0.5"
@@ -28,6 +30,8 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^8.0.3",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "prettier": "^2.4.1",
     "sass": "^1.53.0",
     "semver": "^7.3.7",
@@ -35,7 +39,12 @@
     "vite": "^2.9.9",
     "vite-plugin-html": "^3.2.0",
     "vite-plugin-pwa": "^0.12.1",
-    "vue-demi": "^0.13.1",
     "vue-tsc": "^0.38.2"
+  },
+  "lint-staged": {
+    "*.{ts,js,tsx,vue}": [
+      "npm run lint",
+      "prettier --write"
+    ]
   }
 }

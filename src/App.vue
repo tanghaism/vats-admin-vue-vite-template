@@ -23,7 +23,7 @@ const setLocale = async (lang: ILangMapKey) => {
   const { message, antMessage } = await loadMessage(lang);
   locale.value = lang;
   localeMessage.value = antMessage.default;
-  setLocaleMessage(lang, message.default);
+  setLocaleMessage(lang, message);
 };
 
 setLocale(rootStore.lang);

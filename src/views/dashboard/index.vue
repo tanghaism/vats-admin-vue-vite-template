@@ -1,6 +1,7 @@
 <template>
   <vats-page :has-permission="true" title="Dashboard" @init="handlePass">
     这是dashboard页面
+    <p>当前语言：{{ $t('common.test') }}</p>
   </vats-page>
 </template>
 
@@ -14,7 +15,7 @@ export default defineComponent({
 
 <script lang="ts" setup>
 const handlePass = () => {
-  console.log('触发了');
+  console.log('此处初始化数据');
 };
 </script>
 

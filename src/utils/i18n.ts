@@ -10,17 +10,17 @@ export async function loadMessage(lang: string): Promise<Record<'message' | 'ant
   let defaultLocal, antMessage, dayjsMessage;
   switch (lang) {
     case 'en':
-      defaultLocal = import.meta.glob(`./lang/en/*.ts`);
+      defaultLocal = import.meta.glob(`../locales/en/*.ts`);
       antMessage = await import('ant-design-vue/es/locale/en_US');
       dayjsMessage = await import('dayjs/locale/en');
       break;
     case 'ja':
-      defaultLocal = import.meta.glob(`./lang/ja/*.ts`);
+      defaultLocal = import.meta.glob(`../locales/ja/*.ts`);
       antMessage = await import('ant-design-vue/es/locale/ja_JP');
       dayjsMessage = await import('dayjs/locale/ja');
       break;
     default:
-      defaultLocal = import.meta.glob(`./lang/zh/*.ts`);
+      defaultLocal = import.meta.glob(`../locales/zh/*.ts`);
       antMessage = await import('ant-design-vue/es/locale/zh_CN');
       dayjsMessage = await import('dayjs/locale/zh-cn');
       break;
@@ -31,7 +31,7 @@ export async function loadMessage(lang: string): Promise<Record<'message' | 'ant
   dayjs.locale(dayjsMessage.default);
 
   for (const item in defaultLocal) {
-    const fileName = item.replace(`./lang/${lang}/`, '').replace('.ts', '');
+    const fileName = item.replace(`../locales/${lang}/`, '').replace('.ts', '');
     const langObject = await defaultLocal[item]?.();
     message[fileName] = langObject.default;
   }
@@ -47,9 +47,6 @@ export async function initI18n() {
   const lang = Local.get(LANG) ?? 'zh';
   const { message } = await loadMessage(lang);
   return createI18n({
-    legacy: false,
-    globalInjection: true,
-    useScope: 'global',
     locale: lang,
     fallbackLocale: 'zh',
     messages: {

@@ -3,6 +3,9 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'ServiceWorker',
+  render() {
+    return null;
+  },
 });
 </script>
 
